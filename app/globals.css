@@ -1,0 +1,216 @@
+@import "tailwindcss";
+
+@theme {
+  --color-on-error: #690005;
+  --color-surface-container-lowest: #0e0e0e;
+  --color-on-secondary-container: #b7b5af;
+  --color-on-primary-fixed-variant: #930007;
+  --color-on-primary-fixed: #410001;
+  --color-on-tertiary-fixed: #001d32;
+  --color-on-tertiary-container: #002c47;
+  --color-primary-fixed-dim: #ffb4aa;
+  --color-background: #0A0A0A;
+  --color-surface-variant: #353534;
+  --color-secondary-container: #474742;
+  --color-on-secondary-fixed-variant: #474742;
+  --color-on-primary: #690003;
+  --color-error: #ffb4ab;
+  --color-surface-container: #201f1f;
+  --color-primary-fixed: #ffdad5;
+  --color-primary-container: #ff5446;
+  --color-tertiary-fixed-dim: #94ccff;
+  --color-secondary: #c9c6c0;
+  --color-on-surface: #F0EDE6;
+  --color-surface-container-high: #2a2a2a;
+  --color-on-secondary: #31312c;
+  --color-outline-variant: #5f3f3a;
+  --color-outline: #b08782;
+  --color-on-error-container: #ffdad6;
+  --color-error-container: #93000a;
+  --color-on-background: #F0EDE6;
+  --color-inverse-on-surface: #313030;
+  --color-tertiary-container: #2998df;
+  --color-surface-container-highest: #353534;
+  --color-on-primary-container: #5c0002;
+  --color-surface-dim: #131313;
+  --color-surface-container-low: #1c1b1b;
+  --color-on-tertiary: #003352;
+  --color-inverse-primary: #c0000c;
+  --color-secondary-fixed: #e5e2db;
+  --color-primary: #ffb4aa;
+  --color-surface: #131313;
+  --color-on-tertiary-fixed-variant: #004b74;
+  --color-on-surface-variant: #e9bcb6;
+  --color-secondary-fixed-dim: #c9c6c0;
+  --color-surface-tint: #ffb4aa;
+  --color-tertiary-fixed: #cde5ff;
+  --color-on-secondary-fixed: #1c1c18;
+  --color-inverse-surface: #e5e2e1;
+  --color-tertiary: #94ccff;
+  --color-surface-bright: #3a3939;
+  --color-accent: #FF2020;
+
+  --spacing-margin-md: 2rem;
+  --spacing-col-gap: 24px;
+  --spacing-row-gap: 24px;
+  --spacing-gutter: 1px;
+  --spacing-unit: 4px;
+  --spacing-margin-xs: 1rem;
+  --spacing-margin-lg: 48px;
+
+  --font-headline-xl: var(--font-bebas);
+  --font-display-2xl: var(--font-bebas);
+  --font-mono-code: var(--font-space);
+  --font-label-sm: var(--font-space);
+  --font-body-md: var(--font-space);
+  --font-body-lg: var(--font-space);
+  --font-headline-xl-mobile: var(--font-bebas);
+  --font-display-lg: var(--font-bebas);
+}
+
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-radius: 0px !important;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-background);
+    color: var(--color-on-surface);
+    cursor: none;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Force-hide browser cursor on every element — custom cursor handles all states */
+  *, *::before, *::after {
+    cursor: none !important;
+  }
+}
+
+@layer utilities {
+  .border-sharp {
+    border: 1px solid rgba(240, 237, 230, 0.2);
+  }
+  .border-b-sharp { border-bottom: 1px solid rgba(240, 237, 230, 0.2); }
+  .border-t-sharp { border-top: 1px solid rgba(240, 237, 230, 0.2); }
+  .border-l-sharp { border-left: 1px solid rgba(240, 237, 230, 0.2); }
+  .border-r-sharp { border-right: 1px solid rgba(240, 237, 230, 0.2); }
+
+  .clip-photo {
+    clip-path: inset(100% 0 0 0);
+  }
+}
+
+/* Nav Cursor Blink */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.nav-cursor {
+  animation: blink 1s infinite;
+}
+
+/* Ticker */
+.ticker-wrap { overflow: hidden; white-space: nowrap; border-top: 1px solid rgba(240, 237, 230, 0.1); }
+.ticker {
+  display: inline-block;
+  animation: ticker 30s linear infinite;
+}
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Truth or Dare Card Deck */
+.deck-container {
+  position: relative;
+  height: 500px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 2000px;
+}
+.card-item {
+  position: absolute;
+  width: 280px;
+  height: 400px;
+  background: var(--color-surface-dim);
+  border: 1px solid rgba(240, 237, 230, 0.2);
+  padding: 24px;
+  transform-style: preserve-3d;
+  transform-origin: bottom center;
+}
+.card-item.active {
+  border-color: var(--color-accent);
+  z-index: 50;
+}
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+.card-item.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+.card-front, .card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.card-back {
+  background: var(--color-accent);
+  color: var(--color-background);
+  transform: rotateY(180deg);
+  padding: 24px;
+}
+
+/* Grain overlay with subtle jitter animation */
+@keyframes grain-animation {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-1%, -1%); }
+  20% { transform: translate(-2%, 1%); }
+  30% { transform: translate(1%, -2%); }
+  40% { transform: translate(-1%, 2%); }
+  50% { transform: translate(-2%, 1%); }
+  60% { transform: translate(2%, 0); }
+  70% { transform: translate(0, 2%); }
+  80% { transform: translate(1%, 3%); }
+  90% { transform: translate(-2%, 1%); }
+}
+
+.grain-overlay {
+  position: fixed;
+  top: -50%; left: -50%; width: 200%; height: 200%;
+  background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAhu0cM6AH--JbWtQbJNgCTq85hVlUBGzk9RRmLDH30EfgpcxA6wqbWKb9LY_WqFIINXUHl52V2QANQ5vFLbGhJDcyDjoEQQVuF-A4nGMkNBaAtfp5Cp0U5TJpfyeJG7x4qbG1i12oOXXOg_V66qi4YMravWANu2Vpk9TA17Cir1DdAvOH9nL-WDJHM86vudPqRtSlSZHwa1NXj2-gGormiUo6kr9-Xdvbg-TlbbdKH2dCQcHPFC65-d8rH_xutXuKlvJHa2Qn3OsKQ");
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 9998;
+  animation: grain-animation 2s steps(4) infinite;
+  will-change: transform;
+}
+
+/* Progress Bar */
+.scroll-progress-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+.scroll-progress-bar {
+  width: 0%;
+  height: 100%;
+  background: var(--color-accent);
+}
